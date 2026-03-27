@@ -18,16 +18,4 @@ output "efs_file_system_id" {
   description = "EFS File System ID"
   value       = try(aws_efs_file_system.efs_file_system[0].id, null)
 }
-#--------------------------VPC--------------------------------------------
-output "vpc_id" {
-  description = "vpc id"
-  value       = module.vpc.vpc_id
-}
-output "private_subnet_ids" {
-  description = "private subnets id"
-  value       = module.vpc.private_subnets
-}
-output "eks_cluster_security_group_id" {
-  description = "EKS cluster security group id"
-  value       = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
-}
+
