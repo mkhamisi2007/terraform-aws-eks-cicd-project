@@ -15,6 +15,18 @@ cluster_service_ipv4_cidr            = "172.20.0.0/16"
 eks_cluster_version                  = "1.35"
 cluster_endpoint_private_access      = true
 cluster_endpoint_public_access       = true # true at creation and after make it false
+# ⚠️ NOTE:
+# It is recommended to enable public access to the EKS API endpoint only during the initial provisioning phase.
+# This allows Terraform to communicate with the cluster and create all required resources.
+#
+# After the full infrastructure (including Kubernetes resources) is deployed,
+# you should disable public access and rely only on private connectivity for security.
+#
+# Alternative approach:
+# You can run Terraform from a machine connected to the VPC (e.g., via AWS Client VPN),
+# but in that case you may face challenges with pulling container images unless proper endpoints are configured.
+#
+# Recommended approach: Enable public access temporarily, then disable it after deployment.
 cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]
 #---------------------------------enable feacure for install on EKS------------------------------
 enable_load_balancer        = true
