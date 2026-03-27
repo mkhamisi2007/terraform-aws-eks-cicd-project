@@ -126,6 +126,8 @@ The pipeline is implemented using **AWS CodePipeline** and follows these steps:
      - **Route 53 DNS** → `app.m-khamisi.com`
    - **Horizontal Pod Autoscaler (HPA)** is enabled for scaling
 
+<img width="1351" height="450" alt="image" src="https://github.com/user-attachments/assets/6f8e6df7-8e3e-4a72-bef4-0cf4e4a76026" />
+
 ---
 
 ### 📦 Key Features
