@@ -85,6 +85,68 @@ and restrict access to private networking only.
 Alternative: You may run Terraform from within the VPC (e.g., via AWS Client VPN),
 but additional configuration may be required for container image access.
 ---
+## 🚀 CI/CD Pipeline (Part 2)
+
+This section describes the automated CI/CD pipeline used to build, validate, and deploy applications to the EKS cluster.
+
+### 📐 Pipeline Architecture
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/1e8bf587-359e-4a30-bdd0-6936fd38ffac" />
+
+---
+
+### 🔄 Workflow Overview
+
+The pipeline is implemented using **AWS CodePipeline** and follows these steps:
+
+1. **Source (GitHub)**
+   - The pipeline is triggered automatically on code changes (push/merge).
+
+2. **Build (AWS CodeBuild)**
+   - Docker image is built from the application source code
+   - Image is tagged using commit hash
+   - Image is pushed to **Amazon ECR**
+
+3. **Deploy to Test Environment**
+   - Kubernetes manifests are dynamically generated
+   - Application is deployed to EKS (test environment)
+   - Exposed via:
+     - **ALB**
+     - **Route 53 DNS** → `test.m-khamisi.com`
+
+4. **Manual Approval**
+   - A notification is sent via **Amazon SNS**
+   - The system administrator reviews the test environment
+   - Manual approval is required to continue
+
+5. **Deploy to Production**
+   - Application is deployed to production environment in EKS
+   - Exposed via:
+     - **ALB**
+     - **Route 53 DNS** → `app.m-khamisi.com`
+   - **Horizontal Pod Autoscaler (HPA)** is enabled for scaling
+
+---
+
+### 📦 Key Features
+
+- Fully automated Docker build & push to ECR
+- Dynamic Kubernetes manifest generation using templates
+- Separate **test** and **production** environments
+- DNS-based environment access (test & prod)
+- Manual approval gate before production deployment
+- SNS notification integration for operational control
+- Production-ready deployment with ALB + HPA
+
+---
+
+### 🧠 Design Highlights
+
+- Clear separation between test and production environments  
+- Safe deployment strategy with manual validation  
+- Infrastructure and deployment fully automated via AWS services  
+- Scalable and production-ready CI/CD workflow  
+
 
 
 
