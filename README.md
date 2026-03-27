@@ -74,18 +74,6 @@ The cluster includes the following add-ons (installed via Terraform & Helm):
 - All outbound traffic routed via VPC Endpoints
 - IAM Roles for Service Accounts (IRSA)
 
-## ⚠️ Important Note – EKS API Access
-
-During initial deployment, public access to the EKS API endpoint should be enabled
-to allow Terraform to provision all required resources.
-
-After deployment is complete, it is strongly recommended to disable public access
-and restrict access to private networking only.
-
-<img width="921" height="354" alt="image" src="https://github.com/user-attachments/assets/a1509703-e842-4a9c-a78f-bd5c74de7f35" />
-
-Alternative: You may run Terraform from within the VPC (e.g., via AWS Client VPN),
-but additional configuration may be required for container image access.
 ---
 ## 🚀 CI/CD Pipeline (Part 2)
 
