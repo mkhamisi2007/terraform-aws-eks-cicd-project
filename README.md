@@ -50,7 +50,11 @@ The cluster includes the following add-ons (installed via Terraform & Helm):
 - Cluster Autoscaler
 - Metrics Server
 - CloudWatch logging (FluentBit)
+- EBS CSI Driver
+- EFS CSI Driver
 
+> ⚙️ All add-ons are configurable via variables.  
+> You can enable or disable each component from the `terraform.tfvars` file by setting its corresponding flag to `true` or `false`.
 ---
 
 ### 🌐 Networking Design
