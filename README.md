@@ -140,6 +140,55 @@ The pipeline is implemented using **AWS CodePipeline** and follows these steps:
 - Infrastructure and deployment fully automated via AWS services  
 - Scalable and production-ready CI/CD workflow  
 
+## 📊 Monitoring & Logging
+
+The platform integrates **Amazon CloudWatch Container Insights** to provide full observability of the EKS cluster.
+
+---
+
+### 📈 Metrics (CloudWatch Container Insights)
+
+- Metrics are collected using **CloudWatch Container Insights**
+- Provides real-time visibility into:
+  - CPU and memory utilization
+  - Pod and node status
+  - API server performance
+- Used for monitoring cluster health and performance
+
+📸 Example:
+
+<img width="1263" height="583" alt="image" src="https://github.com/user-attachments/assets/0f779b75-e7d5-42af-9ae7-bcc2a15edcc2" />
+
+---
+
+### 📝 Logs (CloudWatch Logs)
+
+- All cluster and application logs are centralized in **Amazon CloudWatch Logs**
+- Includes multiple log streams:
+  - `/aws/containerinsights/<cluster>/application`
+  - `/aws/containerinsights/<cluster>/host`
+  - `/aws/containerinsights/<cluster>/dataplane`
+  - `/aws/containerinsights/<cluster>/performance`
+  - `/aws/eks/<cluster>/cluster`
+- Enables efficient debugging and operational monitoring
+
+📸 Example:
+
+<img width="1287" height="523" alt="image" src="https://github.com/user-attachments/assets/df962a16-8722-4cda-a98d-d9c54667db44" />
+
+---
+
+### 🎯 Key Benefits
+
+- Centralized monitoring and logging using AWS native services  
+- Deep visibility into Kubernetes workloads and infrastructure  
+- Faster troubleshooting with structured log streams  
+- Production-ready observability using CloudWatch  
+
+
+
+
+
 
 
 
