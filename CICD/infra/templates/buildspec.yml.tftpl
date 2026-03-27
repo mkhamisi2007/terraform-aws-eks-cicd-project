@@ -1,0 +1,38 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws --version
+      - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - REPOSITORY_URI=$ECR_REPOSITORY_URI
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=$${COMMIT_HASH}
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $${REPOSITORY_URI%/*}
+
+  build:
+    commands:
+      - echo "Build started on $(date)"
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - docker tag $REPOSITORY_URI:$IMAGE_TAG $REPOSITORY_URI:latest
+
+  post_build:
+    commands:
+      - echo "Pushing Docker images..."
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:latest
+
+      - echo "Generating Kubernetes manifests..."
+      - mkdir -p output/test output/prod tmp
+      
+      - echo "${deployment_test_template_b64}" | base64 -d > tmp/deployment-test.yaml.tftpl
+      - echo "${deployment_prod_template_b64}" | base64 -d > tmp/deployment-prod.yaml.tftpl
+
+      - envsubst < tmp/deployment-test.yaml.tftpl > output/test/app.yaml
+      - envsubst < tmp/deployment-prod.yaml.tftpl > output/prod/app.yaml
+
+artifacts:
+  files:
+    - output/test/app.yaml
+    - output/prod/app.yaml
