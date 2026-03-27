@@ -27,3 +27,7 @@ output "private_subnet_ids" {
   description = "private subnets id"
   value       = module.vpc.private_subnets
 }
+output "eks_cluster_security_group_id" {
+  description = "EKS cluster security group id"
+  value       = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
+}
