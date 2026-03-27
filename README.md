@@ -17,14 +17,15 @@ This section focuses on building a **fully private and production-grade EKS clus
 
 ---
 
-### 🔐 Key Features
+## 🔐 Key Features
 
-- Private EKS Cluster (no public access)
+- EKS Cluster with managed access control
 - Worker nodes deployed in private subnets
-- No NAT Gateway (fully private architecture)
+- No NAT Gateway (VPC endpoints used for AWS service access)
 - Secure communication using VPC Interface Endpoints
 - ALB deployed in public subnet for controlled inbound traffic
 - DNS managed via Route 53
+- Public cluster endpoint enabled for CI/CD deployment integration
 
 ---
 
